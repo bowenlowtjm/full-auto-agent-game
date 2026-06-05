@@ -82,7 +82,7 @@ namespace Pully.Game
             var scoreGO = new GameObject("ScoreText");
             scoreGO.transform.SetParent(canvas.transform, false);
             var scoreRect = scoreGO.AddComponent<RectTransform>();
-            scoreRect.anchoredPosition = new Vector2(0, 200);
+            scoreRect.anchoredPosition = new Vector2(0, 350);
             scoreRect.sizeDelta = new Vector2(300, 80);
             var scoreText = scoreGO.AddComponent<TMPro.TextMeshProUGUI>();
             scoreText.text = "0";
@@ -94,7 +94,7 @@ namespace Pully.Game
             var comboGO = new GameObject("ComboText");
             comboGO.transform.SetParent(canvas.transform, false);
             var comboRect = comboGO.AddComponent<RectTransform>();
-            comboRect.anchoredPosition = new Vector2(0, 150);
+            comboRect.anchoredPosition = new Vector2(0, 280);
             comboRect.sizeDelta = new Vector2(200, 60);
             var comboText = comboGO.AddComponent<TMPro.TextMeshProUGUI>();
             comboText.text = "x1.0";
@@ -106,7 +106,7 @@ namespace Pully.Game
             var livesGO = new GameObject("LivesText");
             livesGO.transform.SetParent(canvas.transform, false);
             var livesRect = livesGO.AddComponent<RectTransform>();
-            livesRect.anchoredPosition = new Vector2(-200, 200);
+            livesRect.anchoredPosition = new Vector2(-250, 350);
             livesRect.sizeDelta = new Vector2(150, 60);
             var livesText = livesGO.AddComponent<TMPro.TextMeshProUGUI>();
             livesText.text = "3/3";
@@ -118,7 +118,7 @@ namespace Pully.Game
             var timerGO = new GameObject("TimerText");
             timerGO.transform.SetParent(canvas.transform, false);
             var timerRect = timerGO.AddComponent<RectTransform>();
-            timerRect.anchoredPosition = new Vector2(200, 200);
+            timerRect.anchoredPosition = new Vector2(250, 350);
             timerRect.sizeDelta = new Vector2(150, 60);
             var timerText = timerGO.AddComponent<TMPro.TextMeshProUGUI>();
             timerText.text = "60";

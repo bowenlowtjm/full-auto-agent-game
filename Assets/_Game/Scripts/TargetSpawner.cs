@@ -111,22 +111,102 @@ namespace Pully.Game
         {
             var go = new GameObject($"{shape}Target");
             var sr = go.AddComponent<SpriteRenderer>();
-            
+
+            // Create simple colored shapes using procedural textures
             switch (shape)
             {
                 case RulesetDefinition.Shape.Circle:
-                    sr.sprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/Knob.psd");
+                    sr.sprite = CreateCircleSprite();
+                    go.AddComponent<CircleCollider2D>().radius = 0.5f;
+                    break;
+                case RulesetDefinition.Shape.Square:
+                    sr.sprite = CreateSquareSprite();
+                    go.AddComponent<BoxCollider2D>();
+                    break;
+                case RulesetDefinition.Shape.Triangle:
+                    sr.sprite = CreateTriangleSprite();
+                    var poly = go.AddComponent<PolygonCollider2D>();
+                    poly.points = new Vector2[] { new(0, 0.5f), new(-0.4f, -0.3f), new(0.4f, -0.3f) };
+                    break;
+                case RulesetDefinition.Shape.Star:
+                    sr.sprite = CreateStarSprite();
                     go.AddComponent<CircleCollider2D>().radius = 0.5f;
                     break;
                 default:
-                    sr.sprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/Background.psd");
+                    sr.sprite = CreateSquareSprite();
                     go.AddComponent<BoxCollider2D>();
                     break;
             }
-            
+
             sr.color = Color.white;
             go.AddComponent<Target>();
             return go;
+        }
+
+        private Sprite CreateCircleSprite()
+        {
+            Texture2D tex = new(64, 64);
+            Color[] pixels = new Color[64 * 64];
+            Vector2 center = new(32, 32);
+            for (int y = 0; y < 64; y++)
+                for (int x = 0; x < 64; x++)
+                {
+                    float dist = Vector2.Distance(new(x, y), center);
+                    pixels[y * 64 + x] = dist < 30 ? Color.white : Color.clear;
+                }
+            tex.SetPixels(pixels);
+            tex.Apply();
+            return Sprite.Create(tex, new Rect(0, 0, 64, 64), new Vector2(0.5f, 0.5f), 64);
+        }
+
+        private Sprite CreateSquareSprite()
+        {
+            Texture2D tex = new(64, 64);
+            Color[] pixels = new Color[64 * 64];
+            for (int y = 4; y < 60; y++)
+                for (int x = 4; x < 60; x++)
+                    pixels[y * 64 + x] = Color.white;
+            tex.SetPixels(pixels);
+            tex.Apply();
+            return Sprite.Create(tex, new Rect(0, 0, 64, 64), new Vector2(0.5f, 0.5f), 64);
+        }
+
+        private Sprite CreateTriangleSprite()
+        {
+            Texture2D tex = new(64, 64);
+            Color[] pixels = new Color[64 * 64];
+            for (int y = 0; y < 64; y++)
+                for (int x = 0; x < 64; x++)
+                {
+                    float py = y / 64f;
+                    float px = x / 64f;
+                    // Simple triangle shape
+                    if (py > 0.2f && py < 0.9f - Mathf.Abs(px - 0.5f) * 1.4f)
+                        pixels[y * 64 + x] = Color.white;
+                }
+            tex.SetPixels(pixels);
+            tex.Apply();
+            return Sprite.Create(tex, new Rect(0, 0, 64, 64), new Vector2(0.5f, 0.5f), 64);
+        }
+
+        private Sprite CreateStarSprite()
+        {
+            Texture2D tex = new(64, 64);
+            Color[] pixels = new Color[64 * 64];
+            Vector2 center = new(32, 32);
+            for (int y = 0; y < 64; y++)
+                for (int x = 0; x < 64; x++)
+                {
+                    Vector2 pos = new(x, y);
+                    float angle = Mathf.Atan2(pos.y - center.y, pos.x - center.x) * Mathf.Rad2Deg;
+                    float dist = Vector2.Distance(pos, center);
+                    // 5-point star shape
+                    float starRadius = 28 * (1 + 0.5f * Mathf.Sin(angle * 5 * Mathf.Deg2Rad));
+                    pixels[y * 64 + x] = dist < starRadius ? Color.white : Color.clear;
+                }
+            tex.SetPixels(pixels);
+            tex.Apply();
+            return Sprite.Create(tex, new Rect(0, 0, 64, 64), new Vector2(0.5f, 0.5f), 64);
         }
         
         private Vector2 GetRandomSpawnPosition()
