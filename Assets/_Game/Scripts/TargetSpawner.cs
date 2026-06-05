@@ -73,15 +73,7 @@ namespace Pully.Game
         {
             int ruleIndex = rng.Next(0, ruleset.rules.Count);
             var rule = ruleset.rules[ruleIndex];
-            GameObject prefab = rule.shape switch
-            {
-                RulesetDefinition.Shape.Circle => circlePrefab,
-                RulesetDefinition.Shape.Square => squarePrefab,
-                RulesetDefinition.Shape.Triangle => trianglePrefab,
-                RulesetDefinition.Shape.Star => starPrefab,
-                _ => null
-            };
-            if (prefab == null) return;
+            GameObject prefab = GetPrefabForShape(rule.shape);
             
             Vector2 spawnPos = GetRandomSpawnPosition();
             GameObject targetObj = Instantiate(prefab, spawnPos, Quaternion.identity, targetContainer);
@@ -93,6 +85,48 @@ namespace Pully.Game
             target.OnTargetExpired += HandleTargetExpired;
             activeTargets.Add(target);
             OnTargetSpawned?.Invoke(target);
+        }
+        
+        private GameObject GetPrefabForShape(RulesetDefinition.Shape shape)
+        {
+            GameObject prefab = shape switch
+            {
+                RulesetDefinition.Shape.Circle => circlePrefab,
+                RulesetDefinition.Shape.Square => squarePrefab,
+                RulesetDefinition.Shape.Triangle => trianglePrefab,
+                RulesetDefinition.Shape.Star => starPrefab,
+                _ => null
+            };
+            
+            // Fallback: create primitive if no prefab assigned
+            if (prefab == null)
+            {
+                prefab = CreatePrimitiveTarget(shape);
+            }
+            
+            return prefab;
+        }
+        
+        private GameObject CreatePrimitiveTarget(RulesetDefinition.Shape shape)
+        {
+            var go = new GameObject($"{shape}Target");
+            var sr = go.AddComponent<SpriteRenderer>();
+            
+            switch (shape)
+            {
+                case RulesetDefinition.Shape.Circle:
+                    sr.sprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/Knob.psd");
+                    go.AddComponent<CircleCollider2D>().radius = 0.5f;
+                    break;
+                default:
+                    sr.sprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/Background.psd");
+                    go.AddComponent<BoxCollider2D>();
+                    break;
+            }
+            
+            sr.color = Color.white;
+            go.AddComponent<Target>();
+            return go;
         }
         
         private Vector2 GetRandomSpawnPosition()
