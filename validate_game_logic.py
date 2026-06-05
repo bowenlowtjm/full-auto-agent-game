@@ -66,7 +66,7 @@ class ScoreManager:
     @property
     def Score(self): return self._score
     @property
-    def Combo(self): return self._combo
+    def ComboMultiplier(self): return self._combo
     @property
     def Lives(self): return self._lives
     @property
@@ -157,7 +157,7 @@ class TestRunner:
         sm.Initialize()
         
         self.assert_equals(sm.Score, 0, "Initial score is 0")
-        self.assert_equals(sm.Combo, 1.0, "Initial combo is 1.0")
+        self.assert_equals(sm.ComboMultiplier, 1.0, "Initial combo is 1.0")
         self.assert_equals(sm.Lives, 3, "Initial lives = ruleset")
         self.assert_equals(sm.IsGameOver, False, "Game not over initially")
     
@@ -178,11 +178,11 @@ class TestRunner:
         sm.Initialize()
         
         sm.OnTargetHit(1)
-        self.assert_greater(sm.Combo, 1.0, "Combo increased after hit")
+        self.assert_greater(sm.ComboMultiplier, 1.0, "Combo increased after hit")
         
-        combo1 = sm.Combo
+        combo1 = sm.ComboMultiplier
         sm.OnTargetHit(1)
-        self.assert_greater(sm.Combo, combo1, "Combo continues increasing")
+        self.assert_greater(sm.ComboMultiplier, combo1, "Combo continues increasing")
     
     def test_combo_cap(self):
         print("\n[4] Combo Cap")
@@ -195,7 +195,7 @@ class TestRunner:
         for _ in range(20):
             sm.OnTargetHit(1)
         
-        self.assert_equals(sm.Combo, 3.0, "Combo capped at max value")
+        self.assert_equals(sm.ComboMultiplier, 3.0, "Combo capped at max value")
     
     def test_miss_penalty(self):
         print("\n[5] Miss Penalty")
@@ -205,12 +205,12 @@ class TestRunner:
         
         # Build combo first
         sm.OnTargetHit(1)
-        self.assert_greater(sm.Combo, 1.0, "Combo built before miss")
+        self.assert_greater(sm.ComboMultiplier, 1.0, "Combo built before miss")
         
         # Miss
         sm.OnTargetMiss()
         self.assert_equals(sm.Lives, 2, "Lives decreased")
-        self.assert_equals(sm.Combo, 1.0, "Combo reset on miss")
+        self.assert_equals(sm.ComboMultiplier, 1.0, "Combo reset on miss")
     
     def test_game_over(self):
         print("\n[6] Game Over")

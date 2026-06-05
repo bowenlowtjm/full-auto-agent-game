@@ -45,7 +45,7 @@ namespace Pully.Tests.EditMode
 
             // Assert
             Assert.AreEqual(0, scoreManager.Score);
-            Assert.AreEqual(1f, scoreManager.Combo);
+            Assert.AreEqual(1f, scoreManager.ComboMultiplierMultiplier);
             Assert.AreEqual(3, scoreManager.Lives);
             Assert.IsFalse(scoreManager.IsGameOver);
         }
@@ -63,7 +63,7 @@ namespace Pully.Tests.EditMode
 
             // Assert
             Assert.Greater(scoreManager.Score, initialScore);
-            Assert.Greater(scoreManager.Combo, 1f);
+            Assert.Greater(scoreManager.ComboMultiplier, 1f);
         }
 
         [Test]
@@ -74,14 +74,14 @@ namespace Pully.Tests.EditMode
             scoreManager.Initialize();
             int initialLives = scoreManager.Lives;
             scoreManager.OnTargetHit(1); // Build combo first
-            Assert.Greater(scoreManager.Combo, 1f);
+            Assert.Greater(scoreManager.ComboMultiplier, 1f);
 
             // Act
             scoreManager.OnTargetMiss();
 
             // Assert
             Assert.AreEqual(initialLives - 1, scoreManager.Lives);
-            Assert.AreEqual(1f, scoreManager.Combo);
+            Assert.AreEqual(1f, scoreManager.ComboMultiplier);
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace Pully.Tests.EditMode
             }
 
             // Assert
-            Assert.LessOrEqual(scoreManager.Combo, maxCombo + 0.01f);
+            Assert.LessOrEqual(scoreManager.ComboMultiplier, maxCombo + 0.01f);
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace Pully.Tests.EditMode
             scoreManager.Initialize();
 
             // Build to target combo
-            while (scoreManager.Combo < combo && scoreManager.Combo < ruleset.comboCap)
+            while (scoreManager.ComboMultiplier < combo && scoreManager.ComboMultiplier < ruleset.comboCap)
             {
                 scoreManager.OnTargetHit(1);
             }
