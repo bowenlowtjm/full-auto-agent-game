@@ -18,14 +18,25 @@ namespace Pully.Tests.EditMode
             return sm;
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            // Clean up all created GameObjects
+            var objects = GameObject.FindObjectsOfType<ScoreManager>();
+            foreach (var obj in objects)
+            {
+                if (obj != null && obj.gameObject != null)
+                    Object.DestroyImmediate(obj.gameObject);
+            }
+        }
+
         [Test]
         public void ScoreManager_InitializesWithCorrectLives()
         {
             var ruleset = ScriptableObject.CreateInstance<RulesetDefinition>();
             ruleset.lives = 3;
 
-            using var go = CreateScoreManager(ruleset);
-            var sm = go.GetComponent<ScoreManager>();
+            var sm = CreateScoreManager(ruleset);
             sm.Initialize();
 
             Assert.AreEqual(3, sm.Lives);
@@ -41,8 +52,7 @@ namespace Pully.Tests.EditMode
             ruleset.comboStep = 1.1f;
             ruleset.comboCap = 5f;
 
-            using var go = CreateScoreManager(ruleset);
-            var sm = go.GetComponent<ScoreManager>();
+            var sm = CreateScoreManager(ruleset);
             sm.Initialize();
 
             sm.OnTargetHit(10);
@@ -58,8 +68,7 @@ namespace Pully.Tests.EditMode
             ruleset.comboStep = 1.1f;
             ruleset.comboCap = 5f;
 
-            using var go = CreateScoreManager(ruleset);
-            var sm = go.GetComponent<ScoreManager>();
+            var sm = CreateScoreManager(ruleset);
             sm.Initialize();
 
             sm.OnTargetHit(1);
@@ -77,8 +86,7 @@ namespace Pully.Tests.EditMode
             ruleset.comboStep = 1.1f;
             ruleset.comboCap = 5f;
 
-            using var go = CreateScoreManager(ruleset);
-            var sm = go.GetComponent<ScoreManager>();
+            var sm = CreateScoreManager(ruleset);
             sm.Initialize();
 
             for (int i = 0; i < 10; i++)
@@ -95,8 +103,7 @@ namespace Pully.Tests.EditMode
             ruleset.comboStep = 1.1f;
             ruleset.comboCap = 5f;
 
-            using var go = CreateScoreManager(ruleset);
-            var sm = go.GetComponent<ScoreManager>();
+            var sm = CreateScoreManager(ruleset);
             sm.Initialize();
 
             sm.OnTargetHit(1);
@@ -113,8 +120,7 @@ namespace Pully.Tests.EditMode
             var ruleset = ScriptableObject.CreateInstance<RulesetDefinition>();
             ruleset.lives = 3;
 
-            using var go = CreateScoreManager(ruleset);
-            var sm = go.GetComponent<ScoreManager>();
+            var sm = CreateScoreManager(ruleset);
             sm.Initialize();
 
             sm.OnTargetMiss();

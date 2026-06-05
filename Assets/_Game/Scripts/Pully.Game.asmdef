@@ -3,8 +3,7 @@
     "rootNamespace": "Pully.Game",
     "references": [
         "Unity.InputSystem",
-        "Unity.TextMeshPro",
-        "Unity.ugui"
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

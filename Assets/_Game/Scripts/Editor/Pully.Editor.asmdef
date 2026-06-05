@@ -3,8 +3,7 @@
     "rootNamespace": "Pully.Editor",
     "references": [
         "Pully.Game",
-        "Unity.TextMeshPro",
-        "Unity.ugui"
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": ["Editor"],
     "excludePlatforms": [],
