@@ -26,5 +26,8 @@ Self-report (honest): <what's done / stubbed / known issues>
 - 2025-06-05 12:52 UTC — Commit `af68edd`: GameScene with camera, canvas, basic UI
 - 2025-06-05 12:55 UTC — Commit `29ec33b`: README with setup guide
 - 2025-06-05 12:58 UTC — Commit `c43042e`: Runtime primitive fallback for zero-config play
-- 2025-06-05 13:00 UTC — Commit `3b6cd81`: **GAME WORKS** - GameBootstrap auto-wires everything
-- **Status:** M1 COMPLETE — Game plays in Unity Editor with zero config!
+- 2025-06-05 13:00 UTC — Commit `3b6cd81`: GameBootstrap auto-wires everything
+- 2025-06-05 13:02 UTC — Commit `7a48e0b`: README now shows GAME WORKS status
+- 2025-06-05 13:05 UTC — Commit `de3aec4`: Menu + GameOver scenes with bootstraps
+- 2025-06-05 13:20 UTC — Commit `230074d`: Bootstrap components attached, all meta files
+- **Status:** **M1 COMPLETE** — Full game playable with Menu → Game → GameOver flow!
