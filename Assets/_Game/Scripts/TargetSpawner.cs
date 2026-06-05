@@ -249,15 +249,15 @@ namespace Pully.Game
         
         public Target FindTargetAt(Vector2 screenPos)
         {
-            // Convert screen position to world position (at z=0 where 2D objects live)
-            Vector3 worldPos = gameCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, gameCamera.nearClipPlane));
+            // Convert screen position to world position
+            Vector3 worldPos = gameCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 0));
             Vector2 worldPos2D = new Vector2(worldPos.x, worldPos.y);
             
-            // Raycast in 2D from that world position
-            RaycastHit2D hit = Physics2D.Raycast(worldPos2D, Vector2.zero);
+            // Use OverlapPoint for 2D - checks what collider is at this point
+            Collider2D hitCollider = Physics2D.OverlapPoint(worldPos2D);
             
-            Debug.Log($"[TargetSpawner] Screen {screenPos} -> World {worldPos2D} - Hit: {(hit.collider != null ? hit.collider.name : "null")}");
-            return hit.collider?.GetComponent<Target>();
+            Debug.Log($"[TargetSpawner] Screen {screenPos} -> World2D {worldPos2D} - Hit: {(hitCollider != null ? hitCollider.name : "null")}");
+            return hitCollider?.GetComponent<Target>();
         }
     }
 }
