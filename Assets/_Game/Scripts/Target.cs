@@ -38,7 +38,8 @@ namespace Pully.Game
                 spriteRenderer.color = color;
             if (hitCollider != null)
                 hitCollider.enabled = true;
-            transform.localScale = Vector3.zero;
+            gameObject.SetActive(true);
+            transform.localScale = Vector3.one;
         }
         
         private void Update()
