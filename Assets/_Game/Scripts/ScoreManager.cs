@@ -13,12 +13,12 @@ namespace Pully.Game
         public int Lives { get; private set; }
         public bool IsGameOver => Lives <= 0;
         
-        public UnityEvent<int> OnScoreChanged;
-        public UnityEvent<float> OnComboChanged;
-        public UnityEvent<int> OnLivesChanged;
-        public UnityEvent OnGameOver;
-        public UnityEvent OnHit;
-        public UnityEvent OnMiss;
+        public UnityEvent<int> OnScoreChanged = new UnityEvent<int>();
+        public UnityEvent<float> OnComboChanged = new UnityEvent<float>();
+        public UnityEvent<int> OnLivesChanged = new UnityEvent<int>();
+        public UnityEvent OnGameOver = new UnityEvent();
+        public UnityEvent OnHit = new UnityEvent();
+        public UnityEvent OnMiss = new UnityEvent();
         
         private void Awake()
         {
