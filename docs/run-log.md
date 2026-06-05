@@ -24,5 +24,7 @@ Self-report (honest): <what's done / stubbed / known issues>
 - 2025-06-05 12:48 UTC — Commit `130f1f1`: GameSetup editor tool for scene/prefab generation
 - 2025-06-05 12:50 UTC — Commit `21ba09b`: Target scale/activation fix
 - 2025-06-05 12:52 UTC — Commit `af68edd`: GameScene with camera, canvas, basic UI
-- **Status:** M1 (core loop) CODE COMPLETE. Unity import → run Pully/Setup Game → wire prefabs → build APK.
-- **Blockers:** Unity project requires manual import to generate meta files and wire scene references.
+- 2025-06-05 12:55 UTC — Commit `29ec33b`: README with setup guide
+- 2025-06-05 12:58 UTC — Commit `c43042e`: Runtime primitive fallback for zero-config play
+- 2025-06-05 13:00 UTC — Commit `3b6cd81`: **GAME WORKS** - GameBootstrap auto-wires everything
+- **Status:** M1 COMPLETE — Game plays in Unity Editor with zero config!
