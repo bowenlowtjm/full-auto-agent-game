@@ -66,8 +66,18 @@ namespace Pully.Game
         public void AttemptGesture(RulesetDefinition.Gesture gesture)
         {
             if (!isActive || isExpired) return;
+            Debug.Log($"[Target] AttemptGesture: clicked with {gesture}, required is {RequiredGesture}");
             OnGestureAttempted?.Invoke(this, gesture);
-            if (gesture == RequiredGesture) Hit(); else Miss();
+            if (gesture == RequiredGesture) 
+            {
+                Debug.Log($"[Target] CORRECT gesture - hitting!");
+                Hit(); 
+            } 
+            else 
+            {
+                Debug.Log($"[Target] WRONG gesture - miss!");
+                Miss();
+            }
         }
         
         private void Hit()

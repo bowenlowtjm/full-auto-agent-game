@@ -249,9 +249,14 @@ namespace Pully.Game
         
         public Target FindTargetAt(Vector2 screenPos)
         {
-            Ray ray = gameCamera.ScreenPointToRay(screenPos);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
-            Debug.Log($"[TargetSpawner] Raycast from {ray.origin} direction {ray.direction} - hit: {(hit.collider != null ? hit.collider.name : "null")}");
+            // Convert screen position to world position (at z=0 where 2D objects live)
+            Vector3 worldPos = gameCamera.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, gameCamera.nearClipPlane));
+            Vector2 worldPos2D = new Vector2(worldPos.x, worldPos.y);
+            
+            // Raycast in 2D from that world position
+            RaycastHit2D hit = Physics2D.Raycast(worldPos2D, Vector2.zero);
+            
+            Debug.Log($"[TargetSpawner] Screen {screenPos} -> World {worldPos2D} - Hit: {(hit.collider != null ? hit.collider.name : "null")}");
             return hit.collider?.GetComponent<Target>();
         }
     }
