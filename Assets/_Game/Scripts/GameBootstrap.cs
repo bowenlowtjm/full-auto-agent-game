@@ -14,29 +14,40 @@ namespace Pully.Game
         
         private void Awake()
         {
-            // Create or find GameManager
-            var gm = FindObjectOfType<GameManager>();
-            if (gm == null)
-            {
-                var gmGO = new GameObject("GameManager");
-                gm = gmGO.AddComponent<GameManager>();
-            }
-            
-            // Ensure ruleset exists
+            // Ensure ruleset exists FIRST (before creating any components)
             if (ruleset == null)
             {
                 ruleset = CreateDefaultRuleset();
             }
             
-            // Wire up components
-            var gestureRec = gm.GetComponent<GestureRecognizer>();
-            if (gestureRec == null) gestureRec = gm.gameObject.AddComponent<GestureRecognizer>();
+            // Create GameManager container - but DON'T add GameManager yet
+            var gmGO = new GameObject("GameManager");
             
-            var spawner = gm.GetComponent<TargetSpawner>();
-            if (spawner == null) spawner = gm.gameObject.AddComponent<TargetSpawner>();
+            // Add ALL dependency components FIRST (before GameManager)
+            // This way GameManager.Awake() finds them already attached
+            var gestureRec = gmGO.GetComponent<GestureRecognizer>();
+            if (gestureRec == null) gestureRec = gmGO.AddComponent<GestureRecognizer>();
             
-            var scoreMgr = gm.GetComponent<ScoreManager>();
-            if (scoreMgr == null) scoreMgr = gm.gameObject.AddComponent<ScoreManager>();
+            var spawner = gmGO.GetComponent<TargetSpawner>();
+            if (spawner == null) spawner = gmGO.AddComponent<TargetSpawner>();
+            
+            var scoreMgr = gmGO.GetComponent<ScoreManager>();
+            if (scoreMgr == null) scoreMgr = gmGO.AddComponent<ScoreManager>();
+            
+            // NOW add GameManager LAST - its Awake() will find all components
+            var gm = gmGO.GetComponent<GameManager>();
+            if (gm == null) gm = gmGO.AddComponent<GameManager>();
+            
+            // Set private fields via reflection (even though components exist on same GO)
+            SetPrivateField(gm, "ruleset", ruleset);
+            SetPrivateField(gm, "gestureRecognizer", gestureRec);
+            SetPrivateField(gm, "targetSpawner", spawner);
+            SetPrivateField(gm, "scoreManager", scoreMgr);
+            SetPrivateField(spawner, "ruleset", ruleset);
+            SetPrivateField(spawner, "gameCamera", Camera.main);
+            SetPrivateField(spawner, "targetContainer", gmGO.transform);
+            SetPrivateField(scoreMgr, "ruleset", ruleset);
+            SetPrivateField(gestureRec, "ruleset", ruleset);
             
             // Create target container
             var container = GameObject.Find("TargetContainer");
@@ -44,6 +55,9 @@ namespace Pully.Game
             {
                 container = new GameObject("TargetContainer");
             }
+            
+            // Update targetContainer to the actual container
+            SetPrivateField(spawner, "targetContainer", container.transform);
             
             // Create Canvas if needed
             var canvas = FindObjectOfType<Canvas>();
@@ -59,16 +73,7 @@ namespace Pully.Game
                 CreateHUD(canvas);
             }
             
-            // Use reflection to set private fields
-            SetPrivateField(gm, "ruleset", ruleset);
-            SetPrivateField(gm, "gestureRecognizer", gestureRec);
-            SetPrivateField(gm, "targetSpawner", spawner);
-            SetPrivateField(gm, "scoreManager", scoreMgr);
-            SetPrivateField(spawner, "ruleset", ruleset);
-            SetPrivateField(spawner, "gameCamera", Camera.main);
-            SetPrivateField(spawner, "targetContainer", container.transform);
-            SetPrivateField(scoreMgr, "ruleset", ruleset);
-            SetPrivateField(gestureRec, "ruleset", ruleset);
+            // Note: Reflection setup already done above before GameManager was added
             
             // Start the game
             gm.StartGame();
