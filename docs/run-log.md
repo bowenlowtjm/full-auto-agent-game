@@ -19,5 +19,10 @@ Self-report (honest): <what's done / stubbed / known issues>
 ```
 
 ## Running log
-- 2025-06-05 12:35 UTC — Scaffold Unity project from templates: RulesetDefinition, core scripts (GestureRecognizer, Target, TargetSpawner, ScoreManager, GameManager, MenuManager, GameOverManager), EditMode/PlayMode tests. Editor/Builder.cs in place. DESIGN.md with flat-vector palette chosen. Git commit: 24e2719
-- **Status:** M1 (core loop) scaffold complete. Ready for Unity import → scene wiring → prefabs → art pass → APK build.
+- 2025-06-05 12:35 UTC — Scaffold Unity project from templates
+- 2025-06-05 12:45 UTC — Commit `d54f68b`: RulesetDefinition + core scripts + tests + docs
+- 2025-06-05 12:48 UTC — Commit `130f1f1`: GameSetup editor tool for scene/prefab generation
+- 2025-06-05 12:50 UTC — Commit `21ba09b`: Target scale/activation fix
+- 2025-06-05 12:52 UTC — Commit `af68edd`: GameScene with camera, canvas, basic UI
+- **Status:** M1 (core loop) CODE COMPLETE. Unity import → run Pully/Setup Game → wire prefabs → build APK.
+- **Blockers:** Unity project requires manual import to generate meta files and wire scene references.
