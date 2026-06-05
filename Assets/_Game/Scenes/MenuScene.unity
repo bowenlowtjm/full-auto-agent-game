@@ -222,7 +222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 705507993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: MenuBootstrap, type: 3}
+  m_Script: {fileID: 11500000, guid: 632f3569d18e145c78ad3b35d702755f, type: 3}
   m_Name: 
   m_EditorClassIdentifier:
 --- !u!224 &705507995

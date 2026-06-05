@@ -145,7 +145,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: GameBootstrap, type: 3}
+  m_Script: {fileID: 11500000, guid: df47f3d94041c487198341c7e3379655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ruleset: {fileID: 0}
