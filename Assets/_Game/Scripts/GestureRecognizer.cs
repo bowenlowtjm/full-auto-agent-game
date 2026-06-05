@@ -84,11 +84,20 @@ namespace Pully.Game
         {
             if (Mouse.current == null) return;
             if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                Debug.Log($"[GestureRecognizer] Mouse DOWN at {Mouse.current.position.value}");
                 HandleTouchBegan(-1, Mouse.current.position.value);
+            }
             else if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                Debug.Log($"[GestureRecognizer] Mouse UP at {Mouse.current.position.value}");
                 HandleTouchEnded(-1, Mouse.current.position.value);
+            }
             if (Mouse.current.rightButton.wasPressedThisFrame)
+            {
+                Debug.Log($"[GestureRecognizer] RIGHT CLICK at {Mouse.current.position.value}");
                 OnTwoFingerTap?.Invoke(Mouse.current.position.value);
+            }
         }
         
         private void HandleTouchBegan(int touchId, Vector2 screenPos)

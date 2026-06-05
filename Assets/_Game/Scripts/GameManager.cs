@@ -125,11 +125,17 @@ namespace Pully.Game
         private void ProcessGesture(RulesetDefinition.Gesture gesture, Vector2 screenPos)
         {
             if (CurrentState != GameState.Playing) return;
+            Debug.Log($"[GameManager] Processing {gesture} at {screenPos}");
             Target target = targetSpawner.FindTargetAt(screenPos);
             if (target != null)
+            {
+                Debug.Log($"[GameManager] Hit target: {target.Shape} requiring {target.RequiredGesture}");
                 target.AttemptGesture(gesture);
+            }
             else
-                return;
+            {
+                Debug.Log($"[GameManager] Miss - no target at {screenPos}");
+            }
         }
         
         private void HandleTargetExpired(Target target) => scoreManager.OnTargetMiss();

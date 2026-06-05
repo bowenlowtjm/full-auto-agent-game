@@ -251,6 +251,7 @@ namespace Pully.Game
         {
             Ray ray = gameCamera.ScreenPointToRay(screenPos);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+            Debug.Log($"[TargetSpawner] Raycast from {ray.origin} direction {ray.direction} - hit: {(hit.collider != null ? hit.collider.name : "null")}");
             return hit.collider?.GetComponent<Target>();
         }
     }
