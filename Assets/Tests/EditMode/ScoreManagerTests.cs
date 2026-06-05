@@ -45,7 +45,7 @@ namespace Pully.Tests.EditMode
 
             // Assert
             Assert.AreEqual(0, scoreManager.Score);
-            Assert.AreEqual(1f, scoreManager.ComboMultiplierMultiplier);
+            Assert.AreEqual(1f, scoreManager.ComboMultiplier);
             Assert.AreEqual(3, scoreManager.Lives);
             Assert.IsFalse(scoreManager.IsGameOver);
         }

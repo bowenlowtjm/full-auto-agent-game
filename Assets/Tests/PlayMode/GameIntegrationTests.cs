@@ -10,7 +10,7 @@ namespace Pully.Tests.PlayMode
     /// <summary>
     /// PlayMode integration tests - runs in actual Unity runtime with full scene setup.
     /// These tests validate the complete game flow including scene loading, object spawning,
-    and input handling.
+    /// and input handling.
     /// </summary>
     public class GameIntegrationTests
     {
@@ -148,7 +148,7 @@ namespace Pully.Tests.PlayMode
             Assert.IsNotNull(menuManager, "MenuManager should exist");
 
             // Simulate Play button click
-            menuManager.StartGame();
+            menuManager.OnPlayButtonPressed();
             yield return new WaitForSeconds(0.5f);
 
             // Assert - scene should have changed
@@ -167,7 +167,7 @@ namespace Pully.Tests.PlayMode
             Assert.IsNotNull(menuManager, "MenuManager should exist in MenuScene");
 
             // Start Game
-            menuManager.StartGame();
+            menuManager.OnPlayButtonPressed();
             yield return new WaitForSeconds(0.5f);
             Assert.AreEqual("GameScene", SceneManager.GetActiveScene().name);
 

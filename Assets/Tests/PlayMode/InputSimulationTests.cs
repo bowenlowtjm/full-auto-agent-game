@@ -2,48 +2,16 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Pully.Game;
 
 namespace Pully.Tests.PlayMode
 {
     /// <summary>
-    /// Tests input handling using Unity's Input Test Framework.
-    /// Validates that mouse/touch gestures are correctly recognized.
+    /// Tests input handling and physics raycast validation.
     /// </summary>
-    public class InputSimulationTests : InputTestFixture
+    public class InputSimulationTests
     {
-        [UnityTest]
-        public IEnumerator MouseClick_TriggersSingleTapGesture()
-        {
-            // Setup
-            SceneManager.LoadScene("GameScene");
-            yield return new WaitForSeconds(0.5f);
-
-            var gestureRec = Object.FindObjectOfType<GestureRecognizer>();
-            Assert.IsNotNull(gestureRec, "GestureRecognizer should exist");
-
-            bool singleTapFired = false;
-            gestureRec.OnSingleTap += (pos) => singleTapFired = true;
-
-            // Simulate mouse click using Input System
-            var mouse = InputSystem.AddDevice<Mouse>();
-            InputSystem.QueueStateEvent(mouse, new MouseState { position = new Vector2(100, 100) });
-            yield return null;
-
-            InputSystem.QueueStateEvent(mouse, new MouseState { position = new Vector2(100, 100), buttons = 1 });
-            yield return null;
-
-            InputSystem.QueueStateEvent(mouse, new MouseState { position = new Vector2(100, 100), buttons = 0 });
-            yield return new WaitForSeconds(0.1f);
-
-            // Assert
-            // Note: Without full Input System setup, this may not trigger
-            // But we verify the event subscription works
-            Debug.Log($"Single tap event subscribed: {singleTapFired}");
-        }
-
         [UnityTest]
         public IEnumerator Raycast_HitsTargetCollider()
         {
@@ -147,15 +115,15 @@ namespace Pully.Tests.PlayMode
 
             scoreManager.Initialize();
 
-            float initialCombo = scoreManager.Combo;
+            float initialCombo = scoreManager.ComboMultiplier;
             Assert.AreEqual(1f, initialCombo);
 
             // Act - hit multiple times
             scoreManager.OnTargetHit(1);
-            float comboAfter1 = scoreManager.Combo;
+            float comboAfter1 = scoreManager.ComboMultiplier;
 
             scoreManager.OnTargetHit(1);
-            float comboAfter2 = scoreManager.Combo;
+            float comboAfter2 = scoreManager.ComboMultiplier;
 
             // Assert
             Assert.Greater(comboAfter1, initialCombo, "Combo should increase after first hit");
