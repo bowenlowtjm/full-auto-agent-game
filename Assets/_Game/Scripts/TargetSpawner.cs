@@ -29,6 +29,12 @@ namespace Pully.Game
         
         private void Awake()
         {
+            // Don't disable here - let Bootstrap set fields first
+            // Validation happens in Start()
+        }
+        
+        private void Start()
+        {
             if (ruleset == null)
             {
                 Debug.LogError("[TargetSpawner] Ruleset not assigned!");
