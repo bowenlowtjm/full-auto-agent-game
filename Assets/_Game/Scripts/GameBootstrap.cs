@@ -186,8 +186,8 @@ namespace Pully.Game
             ruleset.spawnIntervalEnd = 0.6f;
             ruleset.maxConcurrentTargets = 4;
             ruleset.doubleTapWindow = 0.3f;
-            ruleset.longPressDuration = 0.5f;
-            ruleset.swipeMinDistance = 50f;
+            ruleset.longPressDuration = 0.8f;  // Was 0.5s - now requires longer hold for long press
+            ruleset.swipeMinDistance = 80f;
             ruleset.seed = 12345;
             
             return ruleset;
