@@ -12,7 +12,7 @@ namespace Pully.Game
         [SerializeField] private GameObject squarePrefab;
         [SerializeField] private GameObject trianglePrefab;
         [SerializeField] private GameObject starPrefab;
-        [SerializeField] private Transform targetContainer;
+        public Transform targetContainer;
         
         [SerializeField] private float padding = 1f;
         

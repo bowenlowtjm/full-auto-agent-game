@@ -41,7 +41,7 @@ namespace Pully.Editor
             if (result == BuildResult.Succeeded)
             {
                 Debug.Log($"[BUILD] SUCCESS: {apkPath}");
-                long size = report.summary.totalSize / 1024 / 1024;
+                long size = (long)(report.summary.totalSize / (1024 * 1024));
                 Debug.Log($"[BUILD] Size: {size} MB");
             }
             else
